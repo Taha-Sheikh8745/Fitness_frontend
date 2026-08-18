@@ -1,0 +1,15 @@
+{
+  "short_name": "FitForge",
+  "name": "FitForge AI - SaaS Fitness Coach",
+  "icons": [
+    {
+      "src": "vite.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#00E6FF",
+  "background_color": "#0A2740"
+}

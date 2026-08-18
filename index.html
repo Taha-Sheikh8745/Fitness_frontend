@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#0A2740" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FitForge AI | SaaS Fitness Coach</title>
+    <script type="module">
+      if ('serviceWorker' in navigator) {
+        const isDev = import.meta.env.DEV || ['localhost', '127.0.0.1'].includes(window.location.hostname);
+        if (isDev) {
+          // Unregister service worker in development mode to prevent Vite HMR and React SWC preamble conflicts
+          navigator.serviceWorker.getRegistrations().then((registrations) => {
+            for (const registration of registrations) {
+              registration.unregister();
+            }
+          });
+        } else {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+              .then(reg => console.log('Service Worker registered'))
+              .catch(err => console.log('Service Worker registration failed', err));
+          });
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

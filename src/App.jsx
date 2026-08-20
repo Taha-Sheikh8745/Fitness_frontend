@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Toaster } from 'react-hot-toast';
+import ErrorBoundary from './components/common/ErrorBoundary';
 
 // Core Pages (Fast Load)
 import Login from './pages/auth/Login';
@@ -168,12 +169,14 @@ function AppContent() {
 
 function App() {
   return (
-    <AuthProvider>
-      <Toaster position="top-right" toastOptions={{
-        style: { background: '#0A2740', color: '#fff', border: '1px solid rgba(0,230,255,0.2)' }
-      }} />
-      <AppContent />
-    </AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <Toaster position="top-right" toastOptions={{
+          style: { background: '#0A2740', color: '#fff', border: '1px solid rgba(0,230,255,0.2)' }
+        }} />
+        <AppContent />
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
 

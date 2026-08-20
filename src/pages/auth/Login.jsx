@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { motion } from 'framer-motion';
 import { Dumbbell, Mail, Lock, LogIn } from 'lucide-react';
-import { useGoogleLogin } from '@react-oauth/google';
+import GoogleLoginButton from '../../components/auth/GoogleLoginButton';
 import toast from 'react-hot-toast';
 
 const Login = () => {
@@ -38,11 +38,6 @@ const Login = () => {
       toast.error(err.response?.data?.message || 'Google Auth Failed');
     }
   };
-
-  const gLogin = useGoogleLogin({
-    onSuccess: handleGoogleSuccess,
-    onError: () => toast.error('Google Login Error')
-  });
 
   return (
     <div className="min-h-screen bg-bg-dark flex">
@@ -105,13 +100,7 @@ const Login = () => {
               <span className="w-1/5 border-b border-gray-600 lg:w-1/4"></span>
             </div>
 
-            <button 
-              onClick={() => gLogin()}
-              className="mt-4 w-full glass-input flex items-center justify-center gap-2 hover:bg-white/10 transition"
-            >
-              <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="h-5 w-5" alt="Google" />
-              Google
-            </button>
+            <GoogleLoginButton onSuccess={handleGoogleSuccess} text="Google" />
 
             <p className="mt-8 text-center text-sm text-gray-400">
               Don't have an account? <Link to="/register" className="text-accent font-bold hover:underline">Sign up</Link>

@@ -6,11 +6,12 @@ export const isGoogleAuthConfigured = () => {
   return Boolean(
     clientId &&
     clientId !== 'your_google_client_id_here' &&
+    !clientId.includes('your_google_client_id') &&
     clientId.trim() !== ''
   );
 };
 
-const ActiveGoogleButton = ({ onSuccess, text }) => {
+export const GoogleLoginButton = ({ onSuccess, text = 'Google' }) => {
   const gLogin = useGoogleLogin({
     onSuccess,
     onError: (err) => {
@@ -23,36 +24,12 @@ const ActiveGoogleButton = ({ onSuccess, text }) => {
     <button 
       type="button"
       onClick={() => gLogin()}
-      className="mt-4 w-full glass-input flex items-center justify-center gap-2 hover:bg-white/10 transition py-3"
+      className="mt-4 w-full glass-input flex items-center justify-center gap-2 hover:bg-white/10 transition py-3 font-semibold text-white"
     >
       <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="h-5 w-5" alt="Google" />
       {text}
     </button>
   );
-};
-
-const DisabledGoogleButton = ({ text }) => {
-  const handleClick = () => {
-    toast.error('Google Sign-In is not configured. Set VITE_GOOGLE_CLIENT_ID in environment variables.');
-  };
-
-  return (
-    <button 
-      type="button"
-      onClick={handleClick}
-      className="mt-4 w-full glass-input flex items-center justify-center gap-2 hover:bg-white/10 transition opacity-80 py-3"
-    >
-      <img src="https://www.svgrepo.com/show/475656/google-color.svg" className="h-5 w-5" alt="Google" />
-      {text}
-    </button>
-  );
-};
-
-export const GoogleLoginButton = ({ onSuccess, text = 'Google' }) => {
-  if (!isGoogleAuthConfigured()) {
-    return <DisabledGoogleButton text={text} />;
-  }
-  return <ActiveGoogleButton onSuccess={onSuccess} text={text} />;
 };
 
 export default GoogleLoginButton;

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { 
@@ -9,10 +10,13 @@ import {
   Zap, 
   ArrowRight, 
   CheckCircle2,
-  Play
+  Play,
+  Crown
 } from 'lucide-react';
 
 const Landing = () => {
+  const [isYearly, setIsYearly] = useState(false);
+
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -198,6 +202,159 @@ const Landing = () => {
               <p className="text-textMuted text-sm leading-relaxed">{feature.description}</p>
             </motion.div>
           ))}
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-24 px-6 relative bg-black/30 border-t border-white/5">
+        <div className="max-w-7xl mx-auto text-center mb-16">
+          <p className="text-accent font-black tracking-widest text-xs uppercase mb-4">Transparent Pricing</p>
+          <h2 className="text-4xl md:text-6xl font-black italic mb-6">INVEST IN YOUR ELITE PHYSICALITY.</h2>
+          <p className="text-textMuted max-w-2xl mx-auto text-base">
+            Choose the plan engineered for your goals. Upgrade or cancel anytime.
+          </p>
+
+          {/* Monthly / Yearly Toggle */}
+          <div className="flex items-center justify-center gap-4 mt-8">
+            <span className={`text-sm font-bold ${!isYearly ? 'text-white' : 'text-gray-400'}`}>Monthly</span>
+            <button 
+              type="button"
+              onClick={() => setIsYearly(!isYearly)}
+              className="w-14 h-8 bg-white/10 rounded-full p-1 border border-white/10 relative transition-colors focus:outline-none cursor-pointer"
+            >
+              <div className={`w-6 h-6 bg-accent rounded-full transition-transform ${isYearly ? 'translate-x-6' : 'translate-x-0'}`} />
+            </button>
+            <span className={`text-sm font-bold flex items-center gap-2 ${isYearly ? 'text-white' : 'text-gray-400'}`}>
+              Yearly <span className="bg-accent/20 text-accent border border-accent/30 text-xs px-2 py-0.5 rounded-full font-extrabold">SAVE 25%</span>
+            </span>
+          </div>
+        </div>
+
+        {/* Pricing Cards */}
+        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 items-stretch">
+          {/* Free Plan */}
+          <motion.div 
+            whileHover={{ y: -8 }}
+            className="glass p-8 rounded-3xl border border-white/10 flex flex-col justify-between relative overflow-hidden"
+          >
+            <div>
+              <div className="mb-6">
+                <span className="text-xs font-bold uppercase tracking-wider text-gray-400 bg-white/5 px-3 py-1 rounded-full border border-white/10">Starter</span>
+                <h3 className="text-2xl font-bold text-white mt-4">Free Plan</h3>
+                <p className="text-textMuted text-xs mt-1">Essential workout logging & calorie tracking.</p>
+              </div>
+
+              <div className="mb-8">
+                <span className="text-5xl font-black text-white">$0</span>
+                <span className="text-textMuted text-sm"> / {isYearly ? 'year' : 'month'}</span>
+              </div>
+
+              <div className="space-y-4 mb-8">
+                {[
+                  "Basic Workout & Rep Logger",
+                  "Macro & Calorie Tracker",
+                  "Standard Performance History",
+                  "5 AI Coach Queries / month",
+                  "Community Support"
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3 text-sm text-gray-300">
+                    <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <Link to="/register" className="w-full py-4 rounded-full border border-white/20 text-center font-bold hover:bg-white/10 transition text-sm text-white">
+              Get Started Free
+            </Link>
+          </motion.div>
+
+          {/* Pro Plan (Featured) */}
+          <motion.div 
+            whileHover={{ y: -8 }}
+            className="glass p-8 rounded-3xl border-2 border-accent/80 flex flex-col justify-between relative overflow-hidden bg-accent/5 shadow-[0_0_50px_rgba(0,230,255,0.15)]"
+          >
+            <div className="absolute top-0 right-0 bg-accent text-dark font-black text-[10px] uppercase tracking-widest px-4 py-1.5 rounded-bl-xl">
+              Most Popular
+            </div>
+
+            <div>
+              <div className="mb-6">
+                <span className="text-xs font-bold uppercase tracking-wider text-accent bg-accent/10 px-3 py-1 rounded-full border border-accent/30">Pro Athlete</span>
+                <h3 className="text-2xl font-bold text-white mt-4 flex items-center gap-2">
+                  Pro Plan <Sparkles className="w-5 h-5 text-accent" />
+                </h3>
+                <p className="text-textMuted text-xs mt-1">AI Coaching & predictive performance analytics.</p>
+              </div>
+
+              <div className="mb-8">
+                <span className="text-5xl font-black text-accent">{isYearly ? '$14' : '$19'}</span>
+                <span className="text-textMuted text-sm"> / month {isYearly && '(billed annually)'}</span>
+              </div>
+
+              <div className="space-y-4 mb-8">
+                {[
+                  "Unlimited AI Personal Coach",
+                  "Predictive Growth Forecasting",
+                  "Hyper Macro Precision Breakdown",
+                  "Automated Workout Adaptations",
+                  "PDF & CSV Report Exports",
+                  "Priority Support 24/7"
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3 text-sm text-white font-medium">
+                    <CheckCircle2 className="w-4 h-4 text-accent flex-shrink-0" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <Link to="/register" className="w-full py-4 rounded-full bg-accent text-dark text-center font-extrabold hover:shadow-[0_0_30px_rgba(0,230,255,0.4)] transition text-sm">
+              Start Pro Plan
+            </Link>
+          </motion.div>
+
+          {/* Elite Plan */}
+          <motion.div 
+            whileHover={{ y: -8 }}
+            className="glass p-8 rounded-3xl border border-purple-500/30 flex flex-col justify-between relative overflow-hidden bg-purple-900/10"
+          >
+            <div>
+              <div className="mb-6">
+                <span className="text-xs font-bold uppercase tracking-wider text-purple-400 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/30">Elite Forge</span>
+                <h3 className="text-2xl font-bold text-white mt-4 flex items-center gap-2">
+                  Elite Plan <Crown className="w-5 h-5 text-purple-400" />
+                </h3>
+                <p className="text-textMuted text-xs mt-1">VIP coaching, custom integrations & bio-sync.</p>
+              </div>
+
+              <div className="mb-8">
+                <span className="text-5xl font-black text-purple-400">{isYearly ? '$39' : '$49'}</span>
+                <span className="text-textMuted text-sm"> / month {isYearly && '(billed annually)'}</span>
+              </div>
+
+              <div className="space-y-4 mb-8">
+                {[
+                  "Everything in Pro Athlete Plan",
+                  "1-on-1 Personalized Macro Engine",
+                  "Custom Bio-Metric & Wearables Sync",
+                  "VIP Athletic Director Access",
+                  "Early Access to AI Beta Models",
+                  "Dedicated Account Manager"
+                ].map((item, idx) => (
+                  <div key={idx} className="flex items-center gap-3 text-sm text-gray-300">
+                    <CheckCircle2 className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <Link to="/register" className="w-full py-4 rounded-full border border-purple-500/40 text-purple-300 text-center font-bold hover:bg-purple-500/20 transition text-sm">
+              Go Elite
+            </Link>
+          </motion.div>
         </div>
       </section>
 
